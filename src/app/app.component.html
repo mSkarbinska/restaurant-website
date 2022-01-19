@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" >
+  <title>Map</title>
+  <base href="/" >
+  <meta name="viewport" content="width=device-width, initial-scale=1" >
+  <link rel="icon" type="image/x-icon" href="favicon.ico" >
+
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" routerLink="/" routerLinkActive="active" style="margin-left: 10px; font-weight: bold">Delicious 🍲</a>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+
+      <li class="nav-item"><a class="nav-link" routerLink="/" routerLinkActive="active">Home</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/dishes" routerLinkActive="active">Dishes</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/dish-form" routerLinkActive="active">Create new dish</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/shopping-cart" routerLinkActive="active">Shopping Cart</a></li>
+    </ul>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
+
+
+</body>
+
+</html>
+
+

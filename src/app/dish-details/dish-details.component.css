@@ -1,0 +1,13 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.card-body, ul{
+  padding: 10px;
+}
+
+.col-sm-7 {
+  padding: 25px;
+
+}

@@ -1,0 +1,83 @@
+
+
+<div class="row justify-content-center" style="padding: 30px">
+
+  <div class="card" style="max-width: 1000px;">
+    <div class="row no-gutters">
+      <div class="col-sm-5" style="background: #652a2a;">
+        <img [src]="dish.imgs[index]" class="card-img-top" style="object-fit: cover; height: 450px" alt="...">
+
+        <div >
+          <button  (click)="prevPhoto()" style="font-size: 4vh; color:white; margin-left: 180px; background: none; border: none">⬅ </button>
+          <button (click)="nextPhoto()" style="font-size: 4vh; color:white; background: none; border: none"> ➡  </button>
+        </div>
+
+      </div>
+      <div class="col-sm-7">
+        <div class="card-body">
+          <h1 class="card-title">{{this.dish.name}}</h1>
+          <h4 >Ocena: {{this.dish.rating}}</h4>
+          <p class="card-text">{{this.dish.description}}</p>
+          <h4>Cena: ${{dish.price * dishesService.currencyRate  | number : '1.2-2'}}</h4>
+
+            <a routerLink="/dishes" class="btn btn-danger " style="margin-right: 15px; padding:3px" routerLinkActive="active" >Back to menu</a>
+
+            <a  class="btn btn-danger " style="padding:3px">Add to cart</a>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row justify-content-center" style="padding: 30px">
+
+    <h2  >Recenzje</h2>
+          <div class="card" style="width: 80rem; padding: 30px" *ngFor="let review of dish.reviews">
+            <div class="card-body">
+              <h5 class="card-title">{{review.title}}</h5>
+              <div class="nick-and-date">
+                <h6 class="card-subtitle mb-2">{{review.owner}}</h6>
+                <h6 class="card-subtitle mb-2">Data zakupu dania: {{review.date}}</h6>
+              </div>
+              <p class="card-text">{{review.text}}</p>
+            </div>
+          </div>
+
+  <div class="row justify-content-center" style="padding: 30px">
+
+
+
+      <form [formGroup]="reviewForm" (ngSubmit)="formSubmit()" class="card" style="width: 40rem;padding: 30px">
+        <h2 style="align-self: center">Dodaj recenzję</h2>
+              <h6 *ngIf="errors.length != 0" class="text-danger">Błędy:</h6>
+              <p *ngFor="let error of errors" class="text-danger">{{error}}</p>
+        <div class="mb-3">
+          <label for="name" class="form-label">Nick: </label>
+          <input id="name" type="text" formControlName="nick" class="form-control">
+
+        </div>
+        <div class="mb-3">
+          <label for="title" class="form-label">Tytuł: </label>
+          <input id="title" type="text" class="form-control" formControlName="title">
+        </div>
+        <div class="mb-3">
+          <label for="text" class="form-label">Treść: </label>
+          <textarea id="text" class="form-control" rows="3" formControlName="text"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="date" class="form-label">Data zakupu (opcjonalne): </label>
+          <input  id="date" type="date" class="form-control" formControlName="date">
+        </div>
+
+        <div class="mb-3">
+          <button type="submit"  style="padding: 10px;color:white" class="btn btn-danger">Submit</button>
+        </div>
+      </form>
+    </div>
+
+</div>
+
+
+</div>

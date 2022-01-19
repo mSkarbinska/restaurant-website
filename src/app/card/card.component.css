@@ -1,0 +1,52 @@
+.card{
+  margin:10px;
+}
+
+  #cnt{
+    padding: 5px;
+  }
+
+.info{
+    padding:15px;
+}
+
+.adder{
+    padding-top: 10px;
+    align-self: center;
+
+  }
+
+  .card img {
+
+    object-fit: cover;
+    height: 240px;
+    transition: 0.3s ease-in-out;
+    padding-bottom: 20px;
+  }
+
+  .card img:hover {
+    transition: 0.3s ease-in-out;
+    transform: scale(1.2);
+  }
+
+  .grayPhoto{
+    filter: grayscale(100%);
+    opacity: 90%;
+  }
+
+  .grayPhotoCnt{
+    color:red;
+    font-weight: 600;
+  }
+
+  .redPhoto{
+    filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg) saturate(600%) contrast(0.8);
+  }
+
+  .mostExpensive{
+    box-shadow: 0px 0px 11px 1px rgba(27, 177, 27, 0.534) ;
+  }
+
+  .cheapest{
+    box-shadow: 0px 0px 11px 1px rgba(177, 27, 27, 0.534) ;
+  }

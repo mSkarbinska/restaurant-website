@@ -1,0 +1,47 @@
+<div class="container">
+
+
+
+<form [formGroup]="newDish" class="card" style="width: 40rem;">
+  <h3 style="align-self: center">Dodaj danie</h3>
+  <div class="mb-3">
+    <label for="name" class="form-label">Name: </label>
+    <input id="name" type="text" formControlName="name" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label for="cuisine" class="form-label">Cuisine: </label>
+    <input id="cuisine" type="text" formControlName="cuisine" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label for="type" class="form-label">Type: </label>
+    <input id="type" type="text" formControlName="type" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label for="category" class="form-label">Category: </label>
+    <input id="category" type="text" formControlName="category" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label for="ingredients" class="form-label">Add ingredient: </label>
+    <input id="ingredients" type="text" formControlName="ingredients" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label for="quantity" class="form-label">Quantity: </label>
+    <input id="quantity" type="number" formControlName="quantity" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label for="price" class="form-label">Price: </label>
+    <input id="price" type="number" formControlName="price" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description: </label>
+    <input id="description" type="text" formControlName="description" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label for="imgs" class="form-label">Add image (url): </label>
+    <input id="imgs" type="text" formControlName="imgs" class="form-control">
+  </div>
+  <div class="mb-3">
+    <button type="submit" class="btn btn-primary" [disabled]="!newDish.valid" (click) = "onSubmit()">Submit</button>
+  </div>
+  </form>
+</div>

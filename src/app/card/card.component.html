@@ -1,0 +1,36 @@
+
+<div class="card" >
+<!--  [ngClass]="{'mostExpensive': dishesService.getMostExpensive()===dish,'cheapest': dishesService.getCheapest()===dish}"-->
+  <a [routerLink]="['/dish-details', dish.id]" routerLinkActive="active">
+    <img class="card-img-top" src="{{dish.imgs[0]}}" alt="">
+  </a>
+    <div class="info">
+
+        <div>
+            <h5 style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 100ch;display: inline-block ; font-size: large">{{dish.name | uppercase }}</h5>
+            <button type="button" class="btn-close" style="float: right" aria-label="Close" (click)="removeDish()"></button>
+        </div>
+
+
+        <app-star-rating></app-star-rating>
+
+
+        <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 100ch;">{{dish.cuisine | uppercase }}</p>
+
+        <p><strong>Cena:</strong> ${{dish.price * dishesService.currencyRate  | number : '1.2-2'}}</p>
+
+
+        <div class="adder">
+<!--            <button type="button" class="btn btn-light" (click)="dishesService.decrementCounter(dish)" [disabled]="dishesService.isMinusDisabled(dish)" >-</button>-->
+            <span id="cnt" [ngClass]="{'grayPhotoCnt':dish.quantity===0}">{{dishesService.getCurrCounter(dish) }}</span>
+<!--            <button type="button" class="btn btn-light" (click)="dishesService.incrementCounter(dish)" [disabled]="dishesService.isPlusDisabled(dish)" >+</button>-->
+        </div>
+
+
+    </div>
+
+
+  </div>
+
+
+

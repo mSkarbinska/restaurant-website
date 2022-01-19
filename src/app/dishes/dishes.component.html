@@ -1,0 +1,22 @@
+
+<div class="container" *ngIf="dishesService.getDishes() | async as dishes">
+
+  <button type="button"  class="btn btn-warning"  [ngStyle]="{'background-color':dishesService.totalQuantity<10 ? 'orange':'#0099FF'}">W koszyku: {{dishesService.totalQuantity}}</button>
+  Zmiana waluty:
+  <button type="button" id="changeCurrBtn" class="btn btn-info" (click)="dishesService.changeCurrency()" >{{dishesService.currCurrency}}</button>
+
+
+  <div class="row " style="padding-bottom: 200px">
+
+    <div class="col-8 col-md-4"  *ngFor="let dish of dishes | slice : currPage * perPage : (currPage + 1) * perPage "  >
+
+      <app-card  *ngIf="dish.active==true" [dish]="dish" (remove)="removeDish($event)" ></app-card>
+    </div>
+    <div class="buttons" *ngIf="dishes.length != 0" style="display: inline-flex; justify-content: center ">
+      <button  type="button" class="btn btn-danger" [disabled]="currPage===0"  (click)="previousPage()">⬅ </button>
+      <p style="padding-left: 10px; padding-right: 10px">{{currPage + 1}} </p>
+      <button  type="button" class="btn btn-danger" [disabled]="!((currPage + 1) * perPage < dishes.length)" (click)="nextPage()">➡ </button>
+    </div>
+  </div>
+
+</div>
