@@ -3,7 +3,7 @@
 
 
 <form [formGroup]="newDish" class="card" style="width: 40rem;">
-  <h3 style="align-self: center">Dodaj danie</h3>
+  <h2 style="align-self: center">Add dish</h2>
   <div class="mb-3">
     <label for="name" class="form-label">Name: </label>
     <input id="name" type="text" formControlName="name" class="form-control">
@@ -41,7 +41,7 @@
     <input id="imgs" type="text" formControlName="imgs" class="form-control">
   </div>
   <div class="mb-3">
-    <button type="submit" class="btn btn-primary" [disabled]="!newDish.valid" (click) = "onSubmit()">Submit</button>
+    <button type="submit" class="btn btn-danger" [disabled]="!newDish.valid" (click) = "onSubmit()">Submit</button>
   </div>
   </form>
 </div>

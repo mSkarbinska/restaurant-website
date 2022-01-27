@@ -2,7 +2,7 @@ import { Injectable} from '@angular/core';
 import { Dish } from './dish';
 import {Review} from "./review";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
-import { Observable} from "rxjs";
+import {Observable} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +10,6 @@ import { Observable} from "rxjs";
 export class DishesDataService {
   db: any;
   dishes: Observable<Dish[]>;
-  // minusIsDisabled: boolean[];
-  // plusIsDisabled: boolean[];
   currQuantity: Map<string, number> = new Map<string, number>();
   reviews: Map<string, Review[]> = new Map<string, Review[]>();
   currCurrency: string = 'USD';
@@ -21,34 +19,12 @@ export class DishesDataService {
   constructor(db: AngularFirestore) {
     this.db = db;
     this.dishes = this.db.collectionGroup("dishes").valueChanges({idField: "id"});
-
-    // this.minusIsDisabled= this.dishes.map(()=>{return true});
-    // this.plusIsDisabled = this.dishes.map((dish)=>{return dish.quantity<1});
   }
 
   getDishes(): Observable<Dish[]> {
     return this.dishes;
   }
 
-
-  // addDish(newDish:any){
-  //   this.db.collection("dishes").add({name: newDish.name,
-  //     id: this.dishes.length,
-  //     cuisine: newDish.cuisine,
-  //     type: newDish.type,
-  //     category: newDish.category,
-  //     ingredients: newDish.ingredients.trim().split(","),
-  //     quantity: newDish.quantity,
-  //     rating: 0,
-  //     description: newDish.description,
-  //     price: newDish.price,
-  //     imgs: newDish.imgs.trim().split(","),
-  //     reviews: []
-  //   }).then(
-  //     this.dishesCurrQuantity.push(0)
-  //   );
-
-  // }
   addDish(newDish: any): void {
     this.db.collection("dishes").add({
       name: newDish.name,
@@ -68,11 +44,20 @@ export class DishesDataService {
       });
   }
 
+  // getCheapest(){
+  //   return this.getDishes().subscribe(x => x.filter((item, op) =>  op > item.price ? op : item.price, 0));
+  // }
+
+  // getMostExpensive(): Observable<Dish[]>{
+  //   return this.getDishes().pipe(map(x => x.filter((item, op) =>op < item.price ? op : item.price, 0)));
+  // }
+
   setCurrQuantity(dish: Dish): void {
     if (this.currQuantity.get(dish.id) == undefined) {
       this.currQuantity.set(dish.id, 0);
     }
   }
+
   changeCurrency(){
     if(this.currCurrency==='USD'){
       this.currCurrency='EUR';
@@ -93,12 +78,12 @@ export class DishesDataService {
   decrementCounter(dish: Dish){
     // @ts-ignore
     let tmp: number = this.currQuantity.get(dish.id);
-    this.currQuantity.set(dish.id, tmp + 1);
-    console.log("sdgf");
+    this.currQuantity.set(dish.id, tmp - 1);
+    this.decreaseQuantity(1);
   }
 
-  updateDish(id: string, dish: Dish) {
-    this.db.collection("dishes").doc(id).update(dish);
+  updateDish(dish: Dish) {
+    this.db.collection("dishes").doc(dish.id).update(dish);
   }
 
   incrementCounter(dish:Dish){
@@ -108,9 +93,11 @@ export class DishesDataService {
     else {
       // @ts-ignore
       let tmp: number = this.currQuantity.get(dish.id);
-      this.currQuantity.set(dish.id, tmp - 1);
+      this.currQuantity.set(dish.id, tmp + 1);
     }
+    this.increaseQuantity(1);
   }
+
   increaseQuantity(i: number): void {
     this.totalQuantity += i;
   }
@@ -118,50 +105,13 @@ export class DishesDataService {
   decreaseQuantity(i: number): void {
     this.totalQuantity -= i;
   }
-  // disablePlus(dish:Dish){
-  //   this.plusIsDisabled[dish.id]=!this.plusIsDisabled[dish.id];
-  // }
-  //
-  // disableMinus(dish:Dish){
-  //   this.minusIsDisabled[dish.id]=!this.minusIsDisabled[dish.id];
-  // }
-  //
-  // isPlusDisabled(dish:Dish){
-  //   return this.plusIsDisabled[dish.id];
-  // }
-  //
-  // isMinusDisabled(dish:Dish){
-  //   return this.minusIsDisabled[dish.id];
-  // }
-  //
-  // getMostExpensive(){
-  //   let highestPrice = Math.max.apply(null, this.dishes.map(e => e.price));
-  //   return this.dishes.find(e => e.price === highestPrice);
-  // }
-  //
-  // getCheapest(){
-  //   let lowestPrice = Math.min.apply(null, this.dishes.map(e => e.price));
-  //   return this.dishes.find(e => e.price === lowestPrice);
-  // }
-  //
-  // remove(dish: Dish): void {
-  //   let index: number = this.dishes.indexOf(dish);
-  //   this.dishes.splice(index, 1);
-  // }
+
   removeDish(dish: Dish): void {
     this.currQuantity.delete(dish.id);
     dish.active = false;
-    this.db.collection("dishes").doc(String(dish.id)).update(dish);
+    this.updateDish(dish);
   }
-  // addReview(dish: Dish, newReview: any) {
-  //   let review: Review = {
-  //     owner: newReview.nick,
-  //     title: newReview.title,
-  //     text: newReview.text,
-  //     date: newReview.date,
-  //   };
-  //   dish.reviews.push(review);
-  // }
+
   addReview(dish: Dish, newReview: any): void {
     let review: Review = {
       owner: newReview.nick,
@@ -169,7 +119,9 @@ export class DishesDataService {
       text: newReview.text,
       date: newReview.date,
     };
+
     dish.reviews.push(review);
+
     if (this.reviews.get(dish.id) == undefined) {
       let newArr: Review[] = [];
       newArr.push(review);
@@ -183,7 +135,8 @@ export class DishesDataService {
     }
   }
 
-  getDish(id: string) {
+  getDish(id: string): Observable<Dish>{
+    console.log('getDish')
     return this.db.collection("dishes").doc(id).valueChanges();
   }
 }

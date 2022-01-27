@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DishesDataService } from './dishes-data/dishes-data.service';
+import {AuthService} from "./auth.service";
 
 @Component({
   selector: 'app-root',
@@ -8,4 +8,9 @@ import { DishesDataService } from './dishes-data/dishes-data.service';
 })
 export class AppComponent {
   title = 'restaurant-website';
+  auth: AuthService;
+  constructor(public authService: AuthService) {
+    this.auth = authService;
+  }
+
 }

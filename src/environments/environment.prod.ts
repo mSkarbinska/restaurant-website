@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   firebaseConfig : {
-    apiKey: "YOUR-API-KEY-HERE",
+    apiKey: "AIzaSyCLlttyGXa7TI2hzEPbEh15_hGWvOU6FHg",
     authDomain: "restaurant-website-79d81.firebaseapp.com",
     projectId: "restaurant-website-79d81",
     storageBucket: "restaurant-website-79d81.appspot.com",

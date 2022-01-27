@@ -1,1 +1,18 @@
-<p>shopping-cart works!</p>
+<div class="container">
+
+  <div class="row justify-content-center">
+    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 text-center">
+      <h2 *ngIf="cartService.dishesInCart.length == 0">Nothing in cart yet!</h2>
+      <div *ngFor="let dish of cartService.dishesInCart" class="card" style="padding: 20px; margin:17px">
+        <div class="product">{{dish.name | uppercase}} x{{cartService.getQuantity(dish)}}</div>
+        <div class="price">{{cartService.totalPrices.get(dish.id)! * dishesService.currencyRate | number : '1.2-2'}} <em *ngIf="dishesService.currCurrency === 'USD'">$</em><em *ngIf="dishesService.currCurrency === 'EUR'" >€</em></div>
+      </div>
+      <div class="cart" *ngIf="cartService.dishesInCart.length != 0">
+
+        <button type="button" class="btn btn-outline-danger">
+          Suma: {{cartService.total * dishesService.currencyRate | number : '1.2-2'}}<em *ngIf="dishesService.currCurrency === 'USD'">$</em><em *ngIf="dishesService.currCurrency === 'EUR'" >€</em>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

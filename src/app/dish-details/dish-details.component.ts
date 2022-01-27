@@ -3,6 +3,7 @@ import {Dish} from "../dishes-data/dish";
 import {DishesDataService} from "../dishes-data/dishes-data.service";
 import {ActivatedRoute} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Subscription} from "rxjs";
 
 
 @Component({
@@ -10,11 +11,15 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   templateUrl: './dish-details.component.html',
   styleUrls: ['./dish-details.component.css']
 })
+
+
+
 export class DishDetailsComponent implements OnInit {
   dish!: Dish;
   id!: number;
   errors: string[] = [];
-  index:number =0;
+  index:number = 0;
+  subscription!: Subscription;
   reviewForm: FormGroup = new FormGroup({
     nick: new FormControl('', Validators.required),
     title: new FormControl('', Validators.required),
@@ -22,10 +27,13 @@ export class DishDetailsComponent implements OnInit {
     date: new FormControl('')
   });
   constructor(private route: ActivatedRoute, public dishesService: DishesDataService) { }
+
   nextPhoto(): void {
     this.index++;
     this.index %= this.dish.imgs.length;
+    console.log(this.index,this.dish.imgs.length)
   }
+
   formSubmit(): void {
     this.errors = [];
     let nick: string = this.reviewForm.value.nick;
@@ -48,6 +56,7 @@ export class DishDetailsComponent implements OnInit {
       this.reviewForm.reset();
     }
   }
+
   prevPhoto(): void {
     this.index--;
     if (this.index < 0) {
@@ -57,10 +66,15 @@ export class DishDetailsComponent implements OnInit {
       this.index %= this.dish.imgs.length;
     }
   }
+
   ngOnInit(): void {
     let id: string = this.route.snapshot.params["id"];
-    this.dish = this.dishesService.getDish(id);
-    this.dish.id = id;
+
+    this.subscription = this.dishesService.getDish(id).subscribe((value:Dish) => {
+      this.dish = value;
+      this.dish.id = id;
+    });
+
   }
 
 }
